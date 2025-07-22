@@ -1,3 +1,14 @@
-src/data/identifiers/
-src/data/modalities/
+src/data/datasets/*
+src/data/identifiers/*
 notebooks/
+!notebooks/.gitkeep
+checkpoints/
+!checkpoints/.gitkeep
+metrics/*
+!metrics/.gitkeep
+*.h5
+*.gif
+*.png
+*.pkl
+*.npy
+*.npz

@@ -1,6 +1,6 @@
 from src.constants import LEN_DATASET, LEN_TRAIN_DATASET, LEN_VAL_DATASET
 from sklearn.model_selection import train_test_split
-
+from settings import IDENTIFIERS_DIR, TRAIN_IDS_PATH, VAL_IDS_PATH, TEST_IDS_PATH
 import numpy as np
 
 import torch
@@ -8,16 +8,27 @@ import os
 
 
 
-def checkpoint_save(epoch, model, optimizer, name_folder, checkpoint_path):
+def checkpoint_save(
+        epoch,
+        model,
+        optimizer,
+        name_model,
+        checkpoints_dir
+):
 
     torch.save({
         'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
-    }, f'{checkpoint_path}{name_folder}/epoch_{epoch + 1}.pth.tar')
+    }, f'{checkpoints_dir}/{name_model}/epoch_{epoch + 1}.pth.tar')
 
 
-def loss_save(epoch, loss, name_folder, metrics_path):
-    np.save(f'{metrics_path}{name_folder}/epoch_{epoch+1}.npy', loss)
+def loss_save(
+        epoch,
+        loss,
+        name_model,
+        metrics_dir
+):
+    np.save(f'{metrics_dir}/{name_model}/epoch_{epoch + 1}.npy', loss)
 
 
 def create_identifiers():
@@ -32,10 +43,10 @@ def create_identifiers():
     )
 
 
-    os.makedirs('./src/data/identifiers/', exist_ok=True)
+    os.makedirs(IDENTIFIERS_DIR, exist_ok=True)
 
-    np.save(f'./src/data/identifiers/train_ids.npy', train_ids)
-    np.save(f'./src/data/identifiers/val_ids.npy', val_ids)
-    np.save(f'./src/data/identifiers/test_ids.npy', test_ids)
+    np.save(TRAIN_IDS_PATH, train_ids)
+    np.save(VAL_IDS_PATH, val_ids)
+    np.save(TEST_IDS_PATH, test_ids)
 
     return

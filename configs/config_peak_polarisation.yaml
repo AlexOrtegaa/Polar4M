@@ -1,0 +1,3 @@
+num_epochs: 1000
+name_model: "vq_peak_polarisation"
+datafile_path: "./src/data/datasets/peak_polarisation_intensity.npy"

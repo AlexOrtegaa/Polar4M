@@ -1,0 +1,3 @@
+num_epochs: 1000
+name_model: "vq_stokes_i"
+datafile_path: "./src/data/datasets/stokes_i.npy"

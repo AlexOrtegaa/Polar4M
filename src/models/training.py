@@ -6,7 +6,16 @@ import torch.nn.functional as F
 
 
 
-def train(model, optimizer, train_dataloader, num_epochs, name_folder, metrics_path, checkpoints_path, device):
+def train(
+        model,
+        optimizer,
+        train_dataloader,
+        num_epochs,
+        name_folder,
+        metrics_dir,
+        checkpoints_dir,
+        device
+):
     model.train()
 
     pbar = trange(num_epochs, desc="Training", unit="epoch")
@@ -26,14 +35,14 @@ def train(model, optimizer, train_dataloader, num_epochs, name_folder, metrics_p
             optimizer.step()
 
         per_batch_loss /= len(train_dataloader)
-        loss_save(epoch, per_batch_loss, name_folder, metrics_path)
+        loss_save(epoch, per_batch_loss, name_folder, metrics_dir)
 
         pbar.set_postfix({
             "Training loss (per batch)": f"{per_batch_loss:.2f}",
         })
 
         if epoch % 20 == 0 or epoch == num_epochs - 1:
-            checkpoint_save(epoch, model, optimizer, name_folder, checkpoints_path)
+            checkpoint_save(epoch, model, optimizer, name_folder, checkpoints_dir)
 
     tqdm.write("\a🤖 Training finished!")
     return
