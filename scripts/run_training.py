@@ -14,10 +14,16 @@ import os
 import yaml
 
 
-def _load_data(datafile_path, batch_size):
+def _load_data(
+        datafile_path,
+        batch_size,
+        num_workers,
+        prefetch_factor,
+        pin_memory,
+):
     data = np.load(datafile_path)
 
-    train_ids = np.load(TRAIN_IDS_PATH)
+    train_ids = np.load('./src/data/identifiers/example_ids.npy')
     val_ids = np.load(VAL_IDS_PATH)
     test_ids = np.load(TEST_IDS_PATH)
 
@@ -26,14 +32,34 @@ def _load_data(datafile_path, batch_size):
     val_dataset = MultimodalDataset(data, val_ids)
     test_dataset = MultimodalDataset(data, test_ids)
 
-    train_dataloader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
-    val_dataloader = DataLoader(dataset=val_dataset, batch_size=batch_size, shuffle=False)
-    test_dataloader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
+    train_dataloader = DataLoader(
+        dataset=train_dataset,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        prefetch_factor=prefetch_factor,
+        pin_memory=pin_memory,
+        shuffle=True,
+    )
+    val_dataloader = DataLoader(
+        dataset=val_dataset,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        prefetch_factor=prefetch_factor,
+        pin_memory=pin_memory,
+        shuffle=False
+    )
+    test_dataloader = DataLoader(
+        dataset=test_dataset,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        prefetch_factor=prefetch_factor,
+        pin_memory=pin_memory,
+        shuffle=False
+    )
 
     return train_dataloader, val_dataloader, test_dataloader
 
-
-def main():
+def _get_args():
     config_parser = argparse.ArgumentParser(
         description="Parser to read configuration 'yaml' files"
     )
@@ -47,7 +73,11 @@ def main():
     train_parser = argparse.ArgumentParser(
         description='Parser to run VQ-VAE on POSSUM data'
     )
-
+    train_parser.add_argument(
+        '--datafile_path',
+        type=str,
+        help='Path to the data file containing the modality to be trained.',
+    )
     train_parser.add_argument(
         '--num_epochs',
         type=int,
@@ -59,9 +89,29 @@ def main():
         help='Folder name used to save the model checkpoints and metrics',
     )
     train_parser.add_argument(
-        '--datafile_path',
-        type=str,
-        help='Path to the data file containing the modality to be trained.',
+        '--batch_size',
+        type=int,
+        default=4096,
+        help='The batch size for the model to train.',
+    )
+    train_parser.add_argument(
+        '--num_workers',
+        type=int,
+        default=0,
+        help='Number of workers for the dataloader to parallelize.',
+    )
+    train_parser.add_argument(
+        '--prefetch_factor',
+        type=lambda x: int(x) if x is not None else None,
+        default=2,
+        help='Number of batches each worker loads in advance while the model is training on the current data.'
+    )
+    train_parser.add_argument(
+        '--pin_memory',
+        type=bool,
+        default=False,
+        help='Set to true when the model is run on a GPU. '
+             'It allows for faster data transfer between CPU and GPU. '
     )
 
     args_config, remaining_args = config_parser.parse_known_args()
@@ -72,9 +122,22 @@ def main():
             train_parser.set_defaults(**config_yaml)
 
     args = train_parser.parse_args(remaining_args)
+    datafile_path = args.datafile_path
     num_epochs = args.num_epochs
     name_model = args.name_model
-    datafile_path = args.datafile_path
+
+    batch_size = args.batch_size
+    num_workers = args.num_workers
+    prefetch_factor = args.prefetch_factor
+    pin_memory = args.pin_memory
+
+    return (datafile_path, num_epochs, name_model,
+            batch_size, num_workers, prefetch_factor, pin_memory)
+
+
+def main():
+    (datafile_path, num_epochs, name_model,
+     batch_size, num_workers, prefetch_factor, pin_memory) = _get_args()
 
     if  (not os.path.exists(IDENTIFIERS_DIR)) \
             or (not os.path.exists(TRAIN_IDS_PATH)) \
@@ -88,7 +151,14 @@ def main():
     os.makedirs(f'{CHECKPOINTS_DIR}/{name_model}', exist_ok=True)
     os.makedirs(f'{METRICS_DIR}/{name_model}', exist_ok=True)
 
-    train_dataloader, val_dataloader, test_dataloader = _load_data(datafile_path, batch_size = 4096)
+    train_dataloader, val_dataloader, test_dataloader = _load_data(
+        datafile_path = datafile_path,
+        batch_size = batch_size,
+        num_workers = num_workers,
+        prefetch_factor = prefetch_factor,
+        pin_memory = pin_memory,
+
+    )
 
     model = VQVAE(
         in_channels=1,
@@ -102,7 +172,10 @@ def main():
 
     model.to(device)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=0.001
+    )
 
     train(
         model=model,

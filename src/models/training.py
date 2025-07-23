@@ -14,7 +14,7 @@ def train(
         name_folder,
         metrics_dir,
         checkpoints_dir,
-        device
+        device,
 ):
     model.train()
 
@@ -41,7 +41,7 @@ def train(
             "Training loss (per batch)": f"{per_batch_loss:.2f}",
         })
 
-        if epoch % 20 == 0 or epoch == num_epochs - 1:
+        if epoch % 50 == 0 or epoch == num_epochs - 1:
             checkpoint_save(epoch, model, optimizer, name_folder, checkpoints_dir)
 
     tqdm.write("\a🤖 Training finished!")
