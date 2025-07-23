@@ -1,3 +1,6 @@
+from typing import Dict
+from functools import partial
+
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -245,3 +248,40 @@ class FourM(nn.Module):
     ):
         self.unfreeze_encoder(unfreeze_embeddings=True)
         self.unfreeze_decoder(unfreeze_embeddings=True)
+
+
+def fm_base_12e_12d_gelu(
+        encoder_embeddings: Dict[str, nn.Module],
+        decoder_embeddings: Dict[str, nn.Module],
+        **kwargs):
+    model = FourM(
+        encoder_embeddings=encoder_embeddings,
+        decoder_embeddings=decoder_embeddings,
+        encoder_depth=12,
+        decoder_depth=12,
+        dim=768,
+        num_heads=12,
+        mlp_ratio=4,
+        qkv_bias=True,
+        norm_layer=partial(nn.LayerNorm, eps=1e-6),
+        **kwargs
+    )
+    return model
+
+def fm_small_8e_8d_gelu(
+        encoder_embeddings: Dict[str, nn.Module],
+        decoder_embeddings: Dict[str, nn.Module],
+        **kwargs):
+    model = FourM(
+        encoder_embeddings=encoder_embeddings,
+        decoder_embeddings=decoder_embeddings,
+        encoder_depth=8,
+        decoder_depth=8,
+        dim=512,
+        num_heads=8,
+        mlp_ratio=4,
+        qkv_bias=True,
+        norm_layer=partial(nn.LayerNorm, eps=1e-6),
+        **kwargs
+    )
+    return model
