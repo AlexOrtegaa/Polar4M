@@ -23,7 +23,7 @@ def _load_data(
 ):
     data = np.load(datafile_path)
 
-    train_ids = np.load('./src/data/identifiers/example_ids.npy')
+    train_ids = np.load(TRAIN_IDS_PATH)
     val_ids = np.load(VAL_IDS_PATH)
     test_ids = np.load(TEST_IDS_PATH)
 
