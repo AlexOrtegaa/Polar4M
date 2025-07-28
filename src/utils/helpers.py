@@ -50,3 +50,15 @@ def create_identifiers():
     np.save(TEST_IDS_PATH, test_ids)
 
     return
+
+
+def load_model(
+        model,
+        load_pretrained_model,
+        load_epoch,
+        checkpoints_path,
+):
+    path = f'{checkpoints_path}/{load_pretrained_model}/epoch_{load_epoch}.pth.tar'
+    checkpoint = torch.load(path, weights_only=True, map_location=torch.device('cpu'))
+    model.load_state_dict(checkpoint['model_state_dict'])
+    return
