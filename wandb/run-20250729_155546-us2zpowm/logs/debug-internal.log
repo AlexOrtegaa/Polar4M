@@ -1,0 +1,12 @@
+{"time":"2025-07-29T15:55:47.123843-04:00","level":"INFO","msg":"stream: starting","core version":"0.21.0"}
+{"time":"2025-07-29T15:55:47.321311-04:00","level":"INFO","msg":"stream: created new stream","id":"us2zpowm"}
+{"time":"2025-07-29T15:55:47.321361-04:00","level":"INFO","msg":"stream: started","id":"us2zpowm"}
+{"time":"2025-07-29T15:55:47.321366-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"us2zpowm"}
+{"time":"2025-07-29T15:55:47.321485-04:00","level":"INFO","msg":"handler: started","stream_id":"us2zpowm"}
+{"time":"2025-07-29T15:55:47.321602-04:00","level":"INFO","msg":"sender: started","stream_id":"us2zpowm"}
+{"time":"2025-07-29T15:57:38.596453-04:00","level":"INFO","msg":"stream: closing","id":"us2zpowm"}
+{"time":"2025-07-29T15:57:38.891986-04:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-07-29T15:57:39.043889-04:00","level":"INFO","msg":"handler: closed","stream_id":"us2zpowm"}
+{"time":"2025-07-29T15:57:39.044997-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"us2zpowm"}
+{"time":"2025-07-29T15:57:39.045048-04:00","level":"INFO","msg":"sender: closed","stream_id":"us2zpowm"}
+{"time":"2025-07-29T15:57:39.045143-04:00","level":"INFO","msg":"stream: closed","id":"us2zpowm"}

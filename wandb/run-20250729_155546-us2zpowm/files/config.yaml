@@ -1,0 +1,57 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            s3y4uytowyqbeihqymz62ahlybrie2b4:
+                apple:
+                    ecpuCores: 4
+                    gpuCores: 10
+                    memoryGb: 8
+                    name: Apple M2
+                    pcpuCores: 4
+                    ramTotalBytes: "8589934592"
+                    swapTotalBytes: "3221225472"
+                args:
+                    - -c
+                    - config_peak_polarisation_gpu
+                cpu_count: 8
+                cpu_count_logical: 8
+                disk:
+                    /:
+                        total: "494384795648"
+                        used: "412487266304"
+                email: alexortegacp@gmail.com
+                executable: /Users/alexortega/anaconda3/envs/ml_projects/bin/python
+                git:
+                    commit: 3e3abedaef6c0a3a44a905da823fb6ab792994fb
+                    remote: https://github.com/AlexOrtegaa/foundationalmodel-possum.git
+                host: Alejandros-MacBook-Air-2.local
+                memory:
+                    total: "8589934592"
+                os: macOS-15.4.1-arm64-arm-64bit
+                program: -m scripts.run_training
+                python: CPython 3.11.13
+                root: /Users/alexortega/Documents/foundational_possum
+                startedAt: "2025-07-29T19:55:46.873201Z"
+                writerId: s3y4uytowyqbeihqymz62ahlybrie2b4
+        m: []
+        python_version: 3.11.13
+        t:
+            "1":
+                - 1
+                - 5
+                - 53
+            "2":
+                - 1
+                - 5
+                - 53
+            "3":
+                - 1
+                - 19
+                - 61
+            "4": 3.11.13
+            "5": 0.21.0
+            "12": 0.21.0
+            "13": darwin-arm64
+epochs:
+    value: 1000

@@ -9,3 +9,13 @@ batch_size: 128
 num_workers: 6
 prefetch_factor: 4
 pin_memory: False
+
+#Optimizer
+lr: 1e-3
+weight_decay: 1e-4
+
+#Scheduler
+T_0: 100
+T_mult: 1
+eta_min: 1e-6
+last_epoch: -1

@@ -12,3 +12,5 @@ metrics/*
 *.pkl
 *.npy
 *.npz
+
+# htop
