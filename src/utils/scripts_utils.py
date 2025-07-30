@@ -47,9 +47,10 @@ def _load_data(
         pin_memory,
 ):
     data = np.load(datafile_path)
-
-    MapScaler.max_min_fit(data)
-    data =  MapScaler.max_min_transform(data)
+    
+    scaler = MapScaler()
+    scaler.max_min_fit(data)
+    data =  scaler.max_min_transform(data)
 
     train_ids = np.load(TRAIN_IDS_PATH)
     val_ids = np.load(VAL_IDS_PATH)

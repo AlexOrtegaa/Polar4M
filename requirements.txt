@@ -1,0 +1,7 @@
+einops==0.8.1 
+numpy==2.2.2+computecanada 
+PyYAML==6.0.2 
+scikit_learn==1.6.1+computecanada 
+torch==2.7.1 
+tqdm==4.67.1 
+wandb==0.19.6+computecanada 
