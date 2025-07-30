@@ -1,0 +1,14 @@
+{"time":"2025-07-30T12:05:07.354983609-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.6","symlink path":"/home/alexort/foundational_possum/wandb/offline-run-20250730_120504-n7xd8uxi/logs/debug-core.log"}
+{"time":"2025-07-30T12:05:07.47494215-04:00","level":"INFO","msg":"created new stream","id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.475047268-04:00","level":"INFO","msg":"stream: started","id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.47506411-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.475099487-04:00","level":"INFO","msg":"sender: started","stream_id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.475137007-04:00","level":"INFO","msg":"handler: started","stream_id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.496926581-04:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-07-30T12:05:07.577297319-04:00","level":"INFO","msg":"stream: closing","id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.577400844-04:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-07-30T12:05:07.577986047-04:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-07-30T12:05:07.578123135-04:00","level":"INFO","msg":"handler: closed","stream_id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.578143033-04:00","level":"INFO","msg":"writer: Close: closed","stream_id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.57815758-04:00","level":"INFO","msg":"sender: closed","stream_id":"n7xd8uxi"}
+{"time":"2025-07-30T12:05:07.584894359-04:00","level":"INFO","msg":"stream: closed","id":"n7xd8uxi"}

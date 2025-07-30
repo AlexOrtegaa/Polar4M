@@ -4,6 +4,11 @@ datafile_path: "./src/data/datasets/rotation_measure.npy"
 num_epochs: 3000
 name_model: "vq_rotation_measure"
 
+#Pretrained model
+load_pretrained_model: null
+load_epoch: null
+load_shift: 0
+
 #Data processing
 batch_size: 512
 num_workers: 5
@@ -19,6 +24,3 @@ T_0: 100
 T_mult: 1
 eta_min: 1e-6
 last_epoch: -1
-
-#wandb
-wandb_id: null

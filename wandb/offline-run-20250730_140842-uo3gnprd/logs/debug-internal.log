@@ -1,0 +1,7 @@
+{"time":"2025-07-30T14:08:42.822147941-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.6","symlink path":"/home/alexort/foundational_possum/wandb/offline-run-20250730_140842-uo3gnprd/logs/debug-core.log"}
+{"time":"2025-07-30T14:08:42.928875925-04:00","level":"INFO","msg":"created new stream","id":"uo3gnprd"}
+{"time":"2025-07-30T14:08:42.928947119-04:00","level":"INFO","msg":"stream: started","id":"uo3gnprd"}
+{"time":"2025-07-30T14:08:42.929199436-04:00","level":"INFO","msg":"handler: started","stream_id":"uo3gnprd"}
+{"time":"2025-07-30T14:08:42.92926511-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"uo3gnprd"}
+{"time":"2025-07-30T14:08:42.929382631-04:00","level":"INFO","msg":"sender: started","stream_id":"uo3gnprd"}
+{"time":"2025-07-30T14:08:42.933647822-04:00","level":"INFO","msg":"Starting system monitor"}
