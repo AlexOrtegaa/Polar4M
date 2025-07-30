@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 87, in <module>
+    main()
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 73, in main
+    train(
+  File "/Users/alexortega/Documents/foundational_possum/src/models/training.py", line 32, in train
+    wandb.config.update(
+TypeError: Config.update() got an unexpected keyword argument 'key'

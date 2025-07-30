@@ -1,0 +1,41 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            fq2bjwmu3bg7ci0dqn6wgwjnt21se4bb:
+                args:
+                    - -c
+                    - config_peak_polarisation_gpu
+                email: alexortegacp@gmail.com
+                executable: /Users/alexortega/anaconda3/envs/ml_projects/bin/python
+                git:
+                    commit: 04f6664e84cdb1948d30961303abcb351b5bfdd1
+                    remote: https://github.com/AlexOrtegaa/foundationalmodel-possum.git
+                host: Alejandros-MacBook-Air-2.local
+                os: macOS-15.4.1-arm64-arm-64bit
+                program: -m scripts.run_training
+                python: CPython 3.11.13
+                root: /Users/alexortega/Documents/foundational_possum
+                startedAt: "2025-07-30T15:55:25.467345Z"
+                writerId: fq2bjwmu3bg7ci0dqn6wgwjnt21se4bb
+        m: []
+        python_version: 3.11.13
+        t:
+            "1":
+                - 1
+                - 5
+                - 53
+            "2":
+                - 1
+                - 5
+                - 53
+            "3":
+                - 5
+                - 14
+                - 62
+            "4": 3.11.13
+            "5": 0.21.0
+            "12": 0.21.0
+            "13": darwin-arm64
+epochs:
+    value: 1000

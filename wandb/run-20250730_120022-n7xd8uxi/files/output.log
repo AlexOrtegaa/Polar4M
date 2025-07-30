@@ -1,0 +1,33 @@
+Training:   0%|                                                                                                                                     | 0/3000 [00:54<?, ?epoch/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 87, in <module>
+    main()
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 73, in main
+    train(
+  File "/Users/alexortega/Documents/foundational_possum/src/models/training.py", line 55, in train
+    vq_loss, output, perplexity = model(batch_images)
+                                  ^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1857, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1805, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/Documents/foundational_possum/src/models/quantizer_model/vq_vae.py", line 56, in forward
+    vq_loss, quantized, perplexity, encodings, encoding_indices = self.vector_quantization(z)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/Documents/foundational_possum/src/models/quantizer_model/quantizer.py", line 27, in forward
+    encoding_indices = torch.argmin(distances, dim=1)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,0 +1,22 @@
+[34m[1mwandb[0m: [32m[41mERROR[0m config file epochs doesn't exist
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 87, in <module>
+    main()
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 73, in main
+    train(
+  File "/Users/alexortega/Documents/foundational_possum/src/models/training.py", line 32, in train
+    wandb.config.update(
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/wandb/sdk/wandb_config.py", line 187, in update
+    sanitized = self._update(d, allow_val_change)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/wandb/sdk/wandb_config.py", line 175, in _update
+    parsed_dict = wandb_helper.parse_config(d)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/wandb/sdk/wandb_helper.py", line 13, in parse_config
+    params = config_util.dict_from_config_file(params, must_exist=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/wandb/sdk/lib/config_util.py", line 69, in dict_from_config_file
+    raise ConfigError(f"config file {filename} doesn't exist")
+wandb.sdk.lib.config_util.ConfigError: config file epochs doesn't exist

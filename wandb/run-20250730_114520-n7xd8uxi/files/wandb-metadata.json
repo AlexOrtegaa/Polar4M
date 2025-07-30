@@ -1,0 +1,19 @@
+{
+  "os":  "macOS-15.4.1-arm64-arm-64bit",
+  "python":  "CPython 3.11.13",
+  "startedAt":  "2025-07-30T15:45:20.851491Z",
+  "args":  [
+    "-c",
+    "config_peak_polarisation_gpu"
+  ],
+  "program":  "-m scripts.run_training",
+  "git":  {
+    "remote":  "https://github.com/AlexOrtegaa/foundationalmodel-possum.git",
+    "commit":  "04f6664e84cdb1948d30961303abcb351b5bfdd1"
+  },
+  "email":  "alexortegacp@gmail.com",
+  "root":  "/Users/alexortega/Documents/foundational_possum",
+  "host":  "Alejandros-MacBook-Air-2.local",
+  "executable":  "/Users/alexortega/anaconda3/envs/ml_projects/bin/python",
+  "writerId":  "yhiig6e962aqrz8fjbpnu25a3a8i0ygi"
+}

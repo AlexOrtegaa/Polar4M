@@ -1,0 +1,19 @@
+[34m[1mwandb[0m: [32m[41mERROR[0m Attempted to change value of key "epochs" from 1000 to 3000
+[34m[1mwandb[0m: [32m[41mERROR[0m If you really want to do this, pass allow_val_change=True to config.update()
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 87, in <module>
+    main()
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 73, in main
+    train(
+  File "/Users/alexortega/Documents/foundational_possum/src/models/training.py", line 37, in train
+    wandb.config.epochs = num_epochs
+    ^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/wandb/sdk/wandb_config.py", line 152, in __setitem__
+    key, val = self._sanitize(key, val)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/wandb/sdk/wandb_config.py", line 288, in _sanitize
+    raise config_util.ConfigError(
+wandb.sdk.lib.config_util.ConfigError: Attempted to change value of key "epochs" from 1000 to 3000
+If you really want to do this, pass allow_val_change=True to config.update()

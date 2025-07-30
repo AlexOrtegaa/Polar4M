@@ -1,5 +1,5 @@
 from src.utils.scripts_utils import create_identifiers
-from src.utils.scripts_utils import _load_data, _get_args
+from src.utils.scripts_utils import _load_data, _get_args, load_pretrained
 from src.models.quantizer_model.vq_vae import VQVAE
 from src.models.training import train
 from settings import (METRICS_DIR, CHECKPOINTS_DIR, IDENTIFIERS_DIR,
@@ -61,6 +61,15 @@ def main():
         last_epoch=args.last_epoch,
     )
 
+    load_pretrained(
+        model,
+        optimizer,
+        scheduler,
+        args,
+        CHECKPOINTS_DIR,
+        device,
+    )
+
     train(
         model=model,
         optimizer=optimizer,
@@ -71,6 +80,7 @@ def main():
         metrics_dir=METRICS_DIR,
         checkpoints_dir=CHECKPOINTS_DIR,
         device=device,
+        args=args,
     )
 
 if __name__ == "__main__":

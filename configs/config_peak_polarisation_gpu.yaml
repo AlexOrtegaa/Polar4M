@@ -4,11 +4,15 @@ datafile_path: "./src/data/datasets/peak_polarisation_intensity.npy"
 num_epochs: 3000
 name_model: "vq_peak_polarisation"
 
+#Pretrained model
+load_pretrained_model: "vq_peak_polarisation"
+load_epoch: 1000
+
 #Data processing
 batch_size: 512
 num_workers: 5
 prefetch_factor: 4
-pin_memory: True
+pin_memory: False
 
 #Optimizer
 lr: 1e-3
@@ -21,4 +25,5 @@ eta_min: 1e-6
 last_epoch: -1
 
 #wandb
-wandb_id: null
+wandb_id: "n7xd8uxi"
+load_shift: 1

@@ -118,6 +118,34 @@ def _get_args():
         help='Folder name used to save the model checkpoints and metrics',
     )
     parser.add_argument(
+        '--load_pretrained_model',
+        type=lambda x: str(x) if x is not None else None,
+        default=None,
+        help='Name of the pretrained model to load. If provided, the model will be started from this'
+    )
+    parser.add_argument(
+        '--load_epoch',
+        type=lambda x: int(x) if x is not None else None,
+        default=None,
+        help='Epoch number of the pretrained model to load. If provided, the model will be loaded from this epoch.'
+    )
+    parser.add_argument(
+        '--wandb_id',
+        type=lambda x: str(x) if x is not None else None,
+        default=None,
+        help='wandb id to match run'
+    )
+    parser.add_argument(
+        '--load_shift',
+        type=int,
+        default=0,
+        help='If a training has been tarted from a pretrained model, then you might want '
+             'to count the epochs starting at load_shift when saving metrics and checkpoints. If you are starting a new run set it to 0, '
+             'but if you are extending a past run, set it properly with wandb. This parameter must match the wandb run with the '
+             'id given by the "id" parameter for continual training. The units for this value are num epochs. Often, it should match "load__epoch" if given.'
+             'Finally, note it does not affect the training number of epochs.'
+    )
+    parser.add_argument(
         '--batch_size',
         type=int,
         default=4096,
@@ -179,6 +207,7 @@ def _get_args():
         help='Index of last epoch'
     )
 
+
     args_config, remaining_args = config_parser.parse_known_args()
 
     if args_config.config:
@@ -190,4 +219,80 @@ def _get_args():
     args.config_path = args_config.config
 
     return args
+
+
+def load_pretrained(
+        model,
+        optimizer,
+        scheduler,
+        args,
+        checkpoints_dir,
+        device,
+):
+    if args.load_pretrained_model is not None:
+        if args.load_epoch is None:
+            raise ValueError("If a pretrained model is specified, load_epoch must be specified.")
+
+        load_model(
+            model,
+            args.load_pretrained_model,
+            args.load_epoch,
+            checkpoints_dir,
+            device,
+        )
+
+        load_optimizer(
+            optimizer,
+            args.load_pretrained_model,
+            args.load_epoch,
+            checkpoints_dir,
+            device,
+        )
+
+        load_scheduler(
+            scheduler,
+            args.load_pretrained_model,
+            args.load_epoch,
+            checkpoints_dir,
+            device,
+        )
+
+
+def load_model(
+        model,
+        load_pretrained_model,
+        load_epoch,
+        checkpoints_dir,
+        device,
+):
+    path = f'{checkpoints_dir}/{load_pretrained_model}/epoch_{load_epoch}.pth.tar'
+    checkpoint = torch.load(path, map_location=device, weights_only=True)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    return
+
+def load_optimizer(
+        optimizer,
+        load_pretrained_model,
+        load_epoch,
+        checkpoints_dir,
+        device,
+):
+    path = f'{checkpoints_dir}/{load_pretrained_model}/epoch_{load_epoch}.pth.tar'
+    checkpoint = torch.load(path, map_location=device, weights_only=True)
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    return
+
+def load_scheduler(
+        scheduler,
+        load_pretrained_model,
+        load_epoch,
+        checkpoints_dir,
+        device,
+):
+    path = f'{checkpoints_dir}/{load_pretrained_model}/epoch_{load_epoch}.pth.tar'
+    checkpoint = torch.load(path, map_location=device, weights_only=True)
+    scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+    return
+
+
 
