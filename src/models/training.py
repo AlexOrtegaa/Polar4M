@@ -20,23 +20,9 @@ def train(
         device,
         args,
 ):
-    if args.load_pretrained_model:
-        if (args.load_epoch is None) or (args.wandb_id is None) or (args.load_shift == 0):
-            raise ValueError("If a pretrained model is specified, load_epoch, id, and load_shift must be specified properly."
-                             "The purpose of this is to easily extend a past run.")
-        wandb.init(
-            id=args.wandb_id,
-            project=name_model,
-            resume='must'
-        )
-        wandb.config.update(
-            {"epochs" :wandb.config.epochs + num_epochs},
-            allow_val_change = True
-        )
 
-    else:
-        wandb.init(project=name_model)
-        wandb.config.epochs = num_epochs
+    wandb.init(project=name_model)
+    wandb.config.epochs = num_epochs
 
     wandb.watch(model, log="all")
 
@@ -78,7 +64,7 @@ def train(
             "train_recon_loss": recon_per_batch_loss,
             "train_recon_loss": total_per_batch_loss,
             "lr": optimizer.param_groups[0]["lr"],
-        }, step=num_epochs + args.load_shift)
+        }, step=epoch)
 
         loss_save(
             epoch + args.load_shift,

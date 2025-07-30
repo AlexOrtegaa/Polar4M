@@ -130,19 +130,11 @@ def _get_args():
         help='Epoch number of the pretrained model to load. If provided, the model will be loaded from this epoch.'
     )
     parser.add_argument(
-        '--wandb_id',
-        type=lambda x: str(x) if x is not None else None,
-        default=None,
-        help='wandb id to match run'
-    )
-    parser.add_argument(
         '--load_shift',
         type=int,
         default=0,
         help='If a training has been tarted from a pretrained model, then you might want '
-             'to count the epochs starting at load_shift when saving metrics and checkpoints. If you are starting a new run set it to 0, '
-             'but if you are extending a past run, set it properly with wandb. This parameter must match the wandb run with the '
-             'id given by the "id" parameter for continual training. The units for this value are num epochs. Often, it should match "load__epoch" if given.'
+             'to count the epochs starting at "load_shift" when saving metrics and checkpoints.'
              'Finally, note it does not affect the training number of epochs.'
     )
     parser.add_argument(
