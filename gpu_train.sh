@@ -11,6 +11,8 @@ virtualenv --no-download $SLURM_TMPDIR/env
 source $SLURM_TMPDIR/env/bin/activate
 pip install --no-index -r requirements.txt
 
+export WANDB_DIR=~/foundational_possum
+export WANDB_MODE=offline
 export WANDB_API_KEY=d0994170ead572e9093a51d04a45b0b56c2f45e2
 
-python -u -m scripts.run_training -c config_peak_polarisation_gpu
+python -u -m scripts.run_training -c config_rotation_measure_gpu

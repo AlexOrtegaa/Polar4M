@@ -1,0 +1,7 @@
+{"time":"2025-07-30T10:23:38.484827825-04:00","level":"INFO","msg":"stream: starting","core version":"0.19.6","symlink path":"/home/alexort/foundational_possum/wandb/offline-run-20250730_102338-r1o96gpm/logs/debug-core.log"}
+{"time":"2025-07-30T10:23:38.591637632-04:00","level":"INFO","msg":"created new stream","id":"r1o96gpm"}
+{"time":"2025-07-30T10:23:38.591708967-04:00","level":"INFO","msg":"stream: started","id":"r1o96gpm"}
+{"time":"2025-07-30T10:23:38.591730447-04:00","level":"INFO","msg":"writer: Do: started","stream_id":"r1o96gpm"}
+{"time":"2025-07-30T10:23:38.591761346-04:00","level":"INFO","msg":"sender: started","stream_id":"r1o96gpm"}
+{"time":"2025-07-30T10:23:38.59173679-04:00","level":"INFO","msg":"handler: started","stream_id":"r1o96gpm"}
+{"time":"2025-07-30T10:23:38.596878928-04:00","level":"INFO","msg":"Starting system monitor"}

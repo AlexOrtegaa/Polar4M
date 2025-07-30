@@ -1,8 +1,8 @@
 
 #Model training
-datafile_path: "./src/data/datasets/peak_polarisation_intensity.npy"
+datafile_path: "./src/data/datasets/rotation_measure.npy"
 num_epochs: 3000
-name_model: "vq_peak_polarisation"
+name_model: "vq_rotation_measure"
 
 #Data processing
 batch_size: 512
