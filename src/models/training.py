@@ -29,23 +29,29 @@ def train(
     pbar = trange(num_epochs, desc="Training", unit="epoch")
     for epoch in pbar:
         model.train()
-        total_per_batch_loss = 0
-        recon_per_batch_loss = 0
-        vq_per_batch_loss = 0
-        perplexity_per_batch_loss = 0
+        loss_per_epoch = 0
+        recon_loss_per_epoch = 0
+        vq_loss_per_epoch = 0
+        avg_perplexity = 0
+        commit_loss_per_epoch = 0
+        orthogonal_reg_loss_per_epoch = 0
 
         for batch_idx, batch_images in enumerate(train_dataloader):
 
             batch_images = batch_images.unsqueeze(1).to(device)
 
-            vq_loss, output, perplexity = model(batch_images)
-            recon_loss = F.mse_loss(output, batch_images)
-            loss = vq_loss + recon_loss
+            (quantize, output,
+             loss,
+             recon_loss,
+             vq_loss, commit_loss, orthogonal_reg_loss,
+             embed_ind, perplexity) = model(batch_images)
 
-            total_per_batch_loss += loss.item()
-            recon_per_batch_loss += recon_loss.item()
-            vq_per_batch_loss += vq_loss.item()
-            perplexity_per_batch_loss += perplexity.item()
+            loss_per_epoch += loss.item()
+            recon_loss_per_epoch += recon_loss.item()
+            vq_loss_per_epoch += vq_loss.item()
+            commit_loss_per_epoch += commit_loss.item()
+            orthogonal_reg_loss_per_epoch += orthogonal_reg_loss.item()
+            avg_perplexity += perplexity.item()
 
             optimizer.zero_grad()
             loss.backward()
@@ -53,28 +59,35 @@ def train(
 
             scheduler.step()
 
-        total_per_batch_loss /= len(train_dataloader)
-        recon_per_batch_loss /= len(train_dataloader)
-        vq_per_batch_loss /= len(train_dataloader)
-        perplexity_per_batch_loss /= len(train_dataloader)
+        avg_perplexity /= len(train_dataloader)
 
         wandb.log({
-            "train_vq_loss": vq_per_batch_loss,
-            "train_perplexity": perplexity_per_batch_loss,
-            "train_recon_loss": recon_per_batch_loss,
-            "train_recon_loss": total_per_batch_loss,
+            "loss_per_epoch": loss_per_epoch,
+            "recon_loss_per_epoch": recon_loss_per_epoch,
+            "vq_loss_per_epoch": vq_loss_per_epoch,
+            "commit_loss_per_epoch": commit_loss_per_epoch,
+            "orthogonal_reg_loss_per_epoch": orthogonal_reg_loss_per_epoch,
+            "avg_perplexity": avg_perplexity,
             "lr": optimizer.param_groups[0]["lr"],
         }, step=epoch)
 
         loss_save(
             epoch + args.load_shift,
-            np.array([total_per_batch_loss, recon_per_batch_loss, vq_per_batch_loss]),
+            np.array(
+                [
+                 loss_per_epoch,
+                 recon_loss_per_epoch,
+                 vq_loss_per_epoch,
+                 commit_loss_per_epoch,
+                 orthogonal_reg_loss_per_epoch,
+                 avg_perplexity,
+                 ]),
             name_model,
             metrics_dir
         )
 
         pbar.set_postfix({
-            "Training loss (per batch)": f"{total_per_batch_loss:.2f}",
+            "Training loss": f"{loss_per_epoch:.2f}",
         })
 
         if (epoch + 1) % 50 == 0 or epoch == num_epochs - 1:

@@ -32,7 +32,6 @@ def main():
         num_workers = args.num_workers,
         prefetch_factor = args.prefetch_factor,
         pin_memory = args.pin_memory,
-
     )
 
     model = VQVAE(
@@ -40,9 +39,9 @@ def main():
         hidden_channels=64,
         residual_channels=32,
         num_residual_layers=5,
-        num_embeddings=512,
-        dim_embeddings=128,
-        beta=0.25
+        codebook_size=512,
+        codebook_dim=128,
+        commitment_weight=0.25
     )
 
     model.to(device)
@@ -53,12 +52,12 @@ def main():
         weight_decay=args.weight_decay,
     )
 
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer,
-        T_0=args.T_0,
-        T_mult=args.T_mult,
-        eta_min=args.eta_min,
-        last_epoch=args.last_epoch,
+        max_lr=1e-4,
+        total_steps=1000000,
+        div_factor=10,
+        final_div_factor=1000,
     )
 
     load_pretrained(

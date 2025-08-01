@@ -4,7 +4,12 @@ import torch.nn as nn
 
 
 class ResidualLayer(nn.Module):
-    def __init__(self, in_channels, out_channels, res_channels):
+    def __init__(
+            self,
+            in_channels,
+            out_channels,
+            res_channels
+    ):
         super().__init__()
 
         kernel_size = 3
@@ -15,10 +20,11 @@ class ResidualLayer(nn.Module):
             nn.GELU(),
             nn.Conv2d(in_channels=in_channels,
                       out_channels=res_channels, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
-
+            nn.LayerNorm([res_channels, 32, 32]),
             nn.GELU(),
             nn.Conv2d(in_channels=res_channels,
                       out_channels=out_channels, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
+            nn.LayerNorm([out_channels, 32, 32]),
         )
 
     def forward(self, x):
@@ -28,6 +34,7 @@ class ResidualLayer(nn.Module):
 class ResidualStack(nn.Module):
     def __init__(self, in_channels, out_channels, res_channels, num_residual_layers):
         super().__init__()
+        # keep the same spatial size
         modules = [ResidualLayer(in_channels=in_channels, out_channels=out_channels, res_channels=res_channels) for _ in range(num_residual_layers)]
         self.residual_stack = nn.Sequential(*modules)
 

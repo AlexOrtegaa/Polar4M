@@ -1,43 +1,51 @@
 import torch.nn as nn
+import torch.nn.functional as F
 
 from .encoder import Encoder
 from .decoder import Decoder
-from .quantizer import VectorQuantizer
+from .quantizer import VectorQuantize
 
 
 
 class VQVAE(nn.Module):
 
-    def __init__(self, in_channels, hidden_channels, residual_channels, num_residual_layers,
-                 num_embeddings, dim_embeddings, beta):
+    def __init__(
+            self,
+            in_channels,
+            hidden_channels,
+            residual_channels,
+            num_residual_layers,
+            codebook_size,
+            codebook_dim,
+            commitment_weight
+    ):
         super().__init__()
 
         # encoder
         self.encoder = Encoder(
-            in_channels=in_channels,
-            out_channels=hidden_channels,
-            residual_channels=residual_channels,
+            in_channels=in_channels, # 1
+            out_channels=hidden_channels, # 64
+            residual_channels=residual_channels, # 32x
             num_residual_layers=num_residual_layers,
-        )
+        ) # 64 channels and half of the spatial space
 
-        self.pre_quantization_conv = nn.Conv2d(
-            in_channels=hidden_channels,
-            out_channels=dim_embeddings,
-            kernel_size=1,
-            stride=1,
-        )
-
-        self.vector_quantization = VectorQuantizer(
-            beta=beta,
-            num_embeddings=num_embeddings,
-            dim_embeddings=dim_embeddings,
-        )
-
-        self.post_quantization_conv = nn.ConvTranspose2d(
-            in_channels=dim_embeddings,
-            out_channels=hidden_channels,
-            kernel_size=1,
-            stride=1,
+        self.vector_quantization = VectorQuantize(
+            dim=hidden_channels,
+            codebook_size=codebook_size,
+            codebook_dim=codebook_dim,
+            heads=1,
+            decay=0.8,
+            eps=1e-5,
+            kmeans_init=True,
+            kmeans_iters=10,
+            threshold_ema_dead_code=0,
+            code_replacement_policy='batch_random',  # batch_random or linde_buzo_gray
+            commitment_weight=commitment_weight,
+            orthogonal_reg_weight=0.1,
+            orthogonal_reg_active_codes_only=False,
+            orthogonal_reg_max_codes=None,
+            sample_codebook_temp=0.,
+            norm_latents=True,
         )
 
         self.decoder = Decoder(
@@ -51,12 +59,16 @@ class VQVAE(nn.Module):
 
         z = self.encoder(x)
 
-        z = self.pre_quantization_conv(z)
+        quantize, vq_loss, commit_loss, orthogonal_reg_loss, embed_ind, perplexity = self.vector_quantization(z)
 
-        vq_loss, quantized, perplexity, encodings, encoding_indices = self.vector_quantization(z)
+        x_recon = self.decoder(quantize)
 
-        z_quantized = self.post_quantization_conv(quantized)
+        recon_loss = F.mse_loss(x_recon, x)
 
-        x = self.decoder(z_quantized)
+        loss = recon_loss + vq_loss
 
-        return vq_loss, x, perplexity
+        return (quantize, x_recon,
+                loss,
+                recon_loss,
+                vq_loss, commit_loss, orthogonal_reg_loss,
+                embed_ind, perplexity)

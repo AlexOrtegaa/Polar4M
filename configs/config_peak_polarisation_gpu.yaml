@@ -5,8 +5,9 @@ num_epochs: 3000
 name_model: "vq_peak_polarisation"
 
 #Pretrained model
-load_pretrained_model: "vq_peak_polarisation"
-load_epoch: 1000
+load_pretrained_model: null
+load_epoch: null
+load_shift: 0
 
 #Data processing
 batch_size: 512
@@ -24,6 +25,3 @@ T_mult: 1
 eta_min: 1e-6
 last_epoch: -1
 
-#wandb
-wandb_id: "n7xd8uxi"
-load_shift: 0
