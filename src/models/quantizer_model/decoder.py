@@ -14,10 +14,10 @@ class Decoder(nn.Module):
             ResidualStack(in_channels, in_channels, residual_channels, num_residual_layers),
 
             nn.GELU(),
-            nn.ConvTranspose2d(in_channels, in_channels, kernel_size - 1, stride - 1, padding),
-            nn.LayerNorm([in_channels, 32, 32]),
+            nn.ConvTranspose2d(in_channels, in_channels, kernel_size, stride, padding),
+            nn.LayerNorm([in_channels, 16, 16]),
             nn.GELU(),
-            nn.ConvTranspose2d(in_channels, in_channels // 2, kernel_size - 1, stride - 1, padding),
+            nn.ConvTranspose2d(in_channels, in_channels // 2, kernel_size, stride, padding),
             nn.LayerNorm([in_channels//2, 32, 32]),
             nn.GELU(),
 

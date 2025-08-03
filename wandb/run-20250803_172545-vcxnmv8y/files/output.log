@@ -1,0 +1,93 @@
+Training:   0%|                                                                                                                                     | 0/3000 [00:00<?, ?epoch/s]/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+torch.Size([3, 1, 64, 64])
+Training:   0%|                                                                                                                                     | 0/3000 [00:13<?, ?epoch/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 86, in <module>
+    main()
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 72, in main
+    train(
+  File "/Users/alexortega/Documents/foundational_possum/src/models/training.py", line 47, in train
+    embed_ind, perplexity) = model(batch_images)
+                             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1857, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1805, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/Documents/foundational_possum/src/models/quantizer_model/vq_vae.py", line 60, in forward
+    z = self.encoder(x)
+        ^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/Documents/foundational_possum/src/models/quantizer_model/encoder.py", line 37, in forward
+    return self.conv_stack(x) # spatial size reduced in half
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/container.py", line 240, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/Documents/foundational_possum/src/models/quantizer_model/residual.py", line 42, in forward
+    x = self.residual_stack(x)
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/container.py", line 240, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/Documents/foundational_possum/src/models/quantizer_model/residual.py", line 31, in forward
+    x = x + self.res_block(x)
+            ^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/container.py", line 240, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/modules/normalization.py", line 217, in forward
+    return F.layer_norm(
+           ^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/nn/functional.py", line 2910, in layer_norm
+    return torch.layer_norm(
+           ^^^^^^^^^^^^^^^^^
+RuntimeError: Given normalized_shape=[32, 32, 32], expected input with shape [*, 32, 32, 32], but got input of size[3, 32, 8, 8]

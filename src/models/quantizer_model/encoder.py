@@ -21,13 +21,13 @@ class Encoder(nn.Module):
             nn.Conv2d(in_channels, out_channels // 2, kernel_size, stride, padding),
             nn.LayerNorm([out_channels // 2, 32, 32]),
             nn.GELU(),
-            # keep the same the spatial size
-            nn.Conv2d(out_channels // 2, out_channels, kernel_size - 1, stride - 1, padding),
-            nn.LayerNorm([out_channels, 32, 32]),
+            # reduce in half the spatial size
+            nn.Conv2d(out_channels // 2, out_channels, kernel_size, stride, padding),
+            nn.LayerNorm([out_channels, 16, 16]),
             nn.GELU(),
 
-            nn.Conv2d(out_channels, out_channels, kernel_size - 1, stride - 1, padding),
-            nn.LayerNorm([out_channels, 32, 32]),
+            nn.Conv2d(out_channels, out_channels, kernel_size, stride, padding),
+            nn.LayerNorm([out_channels, 8, 8]),
 
             ResidualStack(out_channels, out_channels, residual_channels, num_residual_layers),
         )

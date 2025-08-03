@@ -1,0 +1,1 @@
+{"recon_loss_per_epoch":1.1915900707244873,"_timestamp":1.754256442391808e+09,"vq_loss_per_epoch":0.03561786934733391,"_step":1,"_runtime":30.057904042,"loss_per_epoch":1.227207899093628,"commit_loss_per_epoch":2.1501204173546284e-05,"orthogonal_reg_loss_per_epoch":0.035596366971731186,"_wandb":{"runtime":30},"avg_perplexity":0.0016480686608701944,"lr":1.0000000009869668e-05}

@@ -1,0 +1,37 @@
+Training:   0%|                                                                                                                                     | 0/3000 [00:00<?, ?epoch/s]/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Training:   0%|                                                                                                                                     | 0/3000 [00:06<?, ?epoch/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 86, in <module>
+    main()
+  File "/Users/alexortega/Documents/foundational_possum/scripts/run_training.py", line 72, in main
+    train(
+  File "/Users/alexortega/Documents/foundational_possum/src/models/training.py", line 39, in train
+    for batch_idx, batch_images in enumerate(train_dataloader):
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 493, in __iter__
+    return self._get_iterator()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 424, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 1171, in __init__
+    w.start()
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/multiprocessing/context.py", line 288, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/Users/alexortega/anaconda3/envs/ml_projects/lib/python3.11/multiprocessing/popen_spawn_posix.py", line 62, in _launch
+    f.write(fp.getbuffer())
+KeyboardInterrupt
