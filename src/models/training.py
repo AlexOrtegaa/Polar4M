@@ -35,7 +35,7 @@ def train(
         avg_perplexity = 0
         commit_loss_per_epoch = 0
         orthogonal_reg_loss_per_epoch = 0
-
+        
         for batch_idx, batch_images in enumerate(train_dataloader):
 
             batch_images = batch_images.unsqueeze(1).to(device)

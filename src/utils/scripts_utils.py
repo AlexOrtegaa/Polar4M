@@ -50,12 +50,11 @@ def _load_data(
 
     scaler = IQRScaler()
     scaler.iqr_fit(data)
-    data =  scaler.iqr_transform(data)
+    data = scaler.iqr_transform(data)
 
     train_ids = np.load(TRAIN_IDS_PATH)
     val_ids = np.load(VAL_IDS_PATH)
     test_ids = np.load(TEST_IDS_PATH)
-
 
     train_dataset = MultimodalDataset(data, train_ids)
     val_dataset = MultimodalDataset(data, val_ids)
