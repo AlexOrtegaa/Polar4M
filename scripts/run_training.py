@@ -36,12 +36,13 @@ def main():
 
     model = VQVAE(
         in_channels=1,
-        hidden_channels=64,
-        residual_channels=32,
-        num_residual_layers=5,
-        codebook_size=512,
-        codebook_dim=128,
-        commitment_weight=0.25
+        hidden_channels=16,
+        residual_channels=8,
+        num_residual_layers=20,
+        codebook_size=100,
+        codebook_dim=3,
+        commitment_weight=1,
+        orthogonal_reg_weight=0.2,
     )
 
     model.to(device)
@@ -54,10 +55,10 @@ def main():
 
     scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer,
-        max_lr=1e-4,
-        total_steps=1000000,
-        div_factor=10,
-        final_div_factor=1000,
+        max_lr=1e-3,
+        total_steps=40000,
+        div_factor=1e1,
+        final_div_factor=1e4,
     )
 
     load_pretrained(

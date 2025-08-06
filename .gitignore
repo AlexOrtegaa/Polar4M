@@ -14,5 +14,4 @@ wandb/*
 *.pkl
 *.npy
 *.npz
-
-# htop
+*.pyc

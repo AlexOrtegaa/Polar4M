@@ -17,7 +17,8 @@ class VQVAE(nn.Module):
             num_residual_layers,
             codebook_size,
             codebook_dim,
-            commitment_weight
+            commitment_weight,
+            orthogonal_reg_weight,
     ):
         super().__init__()
 
@@ -41,7 +42,7 @@ class VQVAE(nn.Module):
             threshold_ema_dead_code=0,
             code_replacement_policy='batch_random',  # batch_random or linde_buzo_gray
             commitment_weight=commitment_weight,
-            orthogonal_reg_weight=0.1,
+            orthogonal_reg_weight=orthogonal_reg_weight,
             orthogonal_reg_active_codes_only=False,
             orthogonal_reg_max_codes=None,
             sample_codebook_temp=0.,
