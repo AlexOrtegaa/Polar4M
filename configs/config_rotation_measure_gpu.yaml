@@ -1,7 +1,7 @@
 
 #Model training
 datafile_path: "./src/data/datasets/rotation_measure.npy"
-num_epochs: 3000
+num_epochs: 7000
 name_model: "vq_rotation_measure"
 
 #Pretrained model
@@ -11,8 +11,8 @@ load_shift: 0
 
 #Data processing
 batch_size: 512
-num_workers: 5
-prefetch_factor: 4
+num_workers: 3
+prefetch_factor: 16
 pin_memory: True
 
 #Optimizer
