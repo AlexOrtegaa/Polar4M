@@ -59,7 +59,10 @@ def train(
 
             scheduler.step()
 
+        print(avg_perplexity)
         avg_perplexity /= len(train_dataloader)
+        print(len(train_dataloader))
+        print(avg_perplexity)
 
         wandb.log({
             "loss_per_epoch": loss_per_epoch,

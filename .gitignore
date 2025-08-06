@@ -6,6 +6,8 @@ checkpoints/
 !checkpoints/.gitkeep
 metrics/*
 !metrics/.gitkeep
+wandb/*
+!wandb/.gitkeep
 *.h5
 *.gif
 *.png

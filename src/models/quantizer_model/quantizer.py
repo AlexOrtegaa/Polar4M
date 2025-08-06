@@ -217,9 +217,9 @@ class EuclideanCodebook(nn.Module):
             embed_normalized = self.embed_avg / cluster_size.unsqueeze(1)
             self.embed.data.copy_(embed_normalized)
             self.expire_codes_(x)
-        probs = self.cluster_size
 
-        perplexity = torch.exp(-torch.sum(probs * torch.log(probs + self.eps)))
+        probs = laplace_smoothing(self.cluster_size, self.codebook_size, self.eps)
+        perplexity = torch.exp(-torch.sum(probs * torch.log(probs)))
         return quantize, embed_ind, perplexity
 
 
