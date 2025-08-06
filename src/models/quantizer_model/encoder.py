@@ -19,15 +19,15 @@ class Encoder(nn.Module):
         self.conv_stack = nn.Sequential(
             # reduce in half the spatial size
             nn.Conv2d(in_channels, out_channels // 2, kernel_size, stride, padding),
-            nn.LayerNorm([out_channels // 2, 32, 32]),
+            nn.BatchNorm2d(out_channels // 2),   # 32x32 spatial size
             nn.GELU(),
             # reduce in half the spatial size
             nn.Conv2d(out_channels // 2, out_channels, kernel_size, stride, padding),
-            nn.LayerNorm([out_channels, 16, 16]),
+            nn.BatchNorm2d(out_channels),       # 16x16 spatial size
             nn.GELU(),
 
             nn.Conv2d(out_channels, out_channels, kernel_size, stride, padding),
-            nn.LayerNorm([out_channels, 8, 8]),
+            nn.BatchNorm2d(out_channels),       # 8x8 spatial size
 
             ResidualStack(out_channels, out_channels, residual_channels, num_residual_layers),
         )

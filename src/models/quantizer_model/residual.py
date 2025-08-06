@@ -20,11 +20,11 @@ class ResidualLayer(nn.Module):
             nn.GELU(),
             nn.Conv2d(in_channels=in_channels,
                       out_channels=res_channels, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
-            nn.LayerNorm([res_channels, 8, 8]),
+            nn.BatchNorm2d(res_channels), # assuming input is 8x8 spatial size
             nn.GELU(),
             nn.Conv2d(in_channels=res_channels,
                       out_channels=out_channels, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
-            nn.LayerNorm([out_channels, 8, 8]),
+            nn.BatchNorm2d(out_channels), # assuming input is 8x8 spatial size
         )
 
     def forward(self, x):

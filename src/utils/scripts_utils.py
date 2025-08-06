@@ -4,7 +4,7 @@ from src.data.data_loader import MultimodalDataset
 from torch.utils.data import DataLoader
 from settings import (CONFIGS_DIR, METRICS_DIR, CHECKPOINTS_DIR, IDENTIFIERS_DIR,
                       TRAIN_IDS_PATH, VAL_IDS_PATH, TEST_IDS_PATH)
-from src.data.scaler import MapScaler
+from src.data.scaler import IQRScaler
 
 import numpy as np
 
@@ -47,10 +47,10 @@ def _load_data(
         pin_memory,
 ):
     data = np.load(datafile_path)
-    
-    scaler = MapScaler()
-    scaler.max_min_fit(data)
-    data =  scaler.max_min_transform(data)
+
+    scaler = IQRScaler()
+    scaler.iqr_fit(data)
+    data =  scaler.iqr_transform(data)
 
     train_ids = np.load(TRAIN_IDS_PATH)
     val_ids = np.load(VAL_IDS_PATH)

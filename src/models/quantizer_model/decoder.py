@@ -15,14 +15,14 @@ class Decoder(nn.Module):
 
             nn.GELU(),
             nn.ConvTranspose2d(in_channels, in_channels, kernel_size, stride, padding),
-            nn.LayerNorm([in_channels, 16, 16]),
+            nn.BatchNorm2d(in_channels),    # 16x16 spatial size
             nn.GELU(),
             nn.ConvTranspose2d(in_channels, in_channels // 2, kernel_size, stride, padding),
-            nn.LayerNorm([in_channels//2, 32, 32]),
+            nn.BatchNorm2d(in_channels//2),   # 32x32 spatial size
             nn.GELU(),
 
             nn.ConvTranspose2d(in_channels // 2, out_channels, kernel_size, stride, padding),
-            nn.LayerNorm([out_channels, 64, 64]),
+            nn.BatchNorm2d(out_channels),      # 64x64 spatial size
         )
 
     def forward(self, x):
