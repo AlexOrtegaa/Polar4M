@@ -1,6 +1,7 @@
 from torch.utils.data import Dataset
 
 import torch
+import os
 
 
 
@@ -27,6 +28,6 @@ class MultimodalDataset(Dataset):
             self,
             index: int,
     ) -> torch.Tensor:
-
+        
         sample_id = self._list_ids[index]
         return self._data[sample_id]

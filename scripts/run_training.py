@@ -47,7 +47,7 @@ def main():
         orthogonal_reg_weight=0.2,
     )
     total_params = sum(p.numel() for p in model.parameters())
-    print(f"Total params: {total_params}")
+    print(f"Total number of params: {total_params}")
 
     model.to(device)
 

@@ -9,7 +9,7 @@ load_epoch: null
 load_shift: 0
 
 #Data processing
-batch_size: 2048
+batch_size: 512
 num_workers: 3
 prefetch_factor: 16
 pin_memory: True

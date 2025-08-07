@@ -1,6 +1,6 @@
 
 #Model training
-datafile_path: "./src/data/datasets/peak_polarisation_intensity.npy"
+datafile_path: "./src/data/datasets/clean_peak_polarisation_intensity.npy"
 num_epochs: 7000
 name_model: "vq_peak_polarisation"
 
