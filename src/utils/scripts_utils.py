@@ -103,7 +103,7 @@ def _load_data(
         num_workers,
         prefetch_factor,
         pin_memory,
-        args,
+        qt_path,
 ):
     data = np.load(datafile_path)
 
@@ -117,7 +117,7 @@ def _load_data(
         data[train_ids],
         data[val_ids],
         data[test_ids],
-        args.qt_path,
+        qt_path,
     )
 
     train_dataset = MultimodalDataset(data, train_ids)

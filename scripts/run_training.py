@@ -33,7 +33,7 @@ def main():
         num_workers = args.num_workers,
         prefetch_factor = args.prefetch_factor,
         pin_memory = args.pin_memory,
-        args=args,
+        qt_path=args.qt_path,
     )
 
     model = VQVAE(
