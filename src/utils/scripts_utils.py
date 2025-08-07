@@ -2,20 +2,19 @@ from src.constants import LEN_DATASET, LEN_TRAIN_DATASET, LEN_VAL_DATASET
 from sklearn.model_selection import train_test_split
 from src.data.data_loader import MultimodalDataset
 from torch.utils.data import DataLoader
-from settings import (CONFIGS_DIR, METRICS_DIR, CHECKPOINTS_DIR, IDENTIFIERS_DIR,
+from settings import (CONFIGS_DIR, IDENTIFIERS_DIR,
                       TRAIN_IDS_PATH, VAL_IDS_PATH, TEST_IDS_PATH)
-from src.data.scaler import IQRScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import QuantileTransformer
 
 import numpy as np
 
 import argparse
-import torch
-import os
 import yaml
 
 import torch
 import os
-
+import joblib
 
 
 def create_identifiers():
@@ -38,6 +37,65 @@ def create_identifiers():
 
     return
 
+def apply_standard_scaler(
+        data
+):
+    shape = data.shape
+
+    scaler = StandardScaler()
+    data = data.reshape(-1, 1)
+    scaler.fit(data)
+
+    return scaler.transform(data).reshape(shape)
+
+def load_or_fit_quantile_transformer(
+        data,
+        qt_path,
+        n_quantiles=int(1e4),
+        random_state=0,
+):
+
+    if os.path.exists(qt_path):
+        qt = joblib.load(qt_path)
+    else:
+        qt = QuantileTransformer(
+            output_distribution='normal',
+            n_quantiles=n_quantiles,
+            random_state=random_state
+        )
+        qt.fit(data.reshape(-1, 1))
+        joblib.dump(qt, qt_path)
+
+    return qt
+
+def apply_quantile_transformation(
+    data,
+    qt,
+):
+    shape = data.shape
+
+    data = data.reshape(-1, 1)
+    data = qt.transform(data)
+
+    return data.reshape(shape)
+
+def quantile_transform_splits(
+        train,
+        val,
+        test,
+        qt_path,
+):
+    qt = load_or_fit_quantile_transformer(
+        train,
+        qt_path,
+    )
+
+    train = apply_quantile_transformation(train, qt)
+    val = apply_quantile_transformation(val, qt)
+    test = apply_quantile_transformation(test, qt)
+
+    return train, val, test
+
 
 def _load_data(
         datafile_path,
@@ -45,17 +103,22 @@ def _load_data(
         num_workers,
         prefetch_factor,
         pin_memory,
+        args,
 ):
     data = np.load(datafile_path)
 
-    scaler = IQRScaler()
-    scaler.iqr_fit(data)
-    data =  scaler.iqr_transform(data)
+    data = apply_standard_scaler(data)
 
     train_ids = np.load(TRAIN_IDS_PATH)
     val_ids = np.load(VAL_IDS_PATH)
     test_ids = np.load(TEST_IDS_PATH)
 
+    data[train_ids], data[val_ids], data[test_ids] = quantile_transform_splits(
+        data[train_ids],
+        data[val_ids],
+        data[test_ids],
+        args.qt_path,
+    )
 
     train_dataset = MultimodalDataset(data, train_ids)
     val_dataset = MultimodalDataset(data, val_ids)
@@ -198,6 +261,15 @@ def _get_args():
         default=-1,
         help='Index of last epoch'
     )
+    parser.add_argument(
+        '--qt_path',
+        type=str,
+        default='./transforms/qt.pkl',
+        help='Path to the Normal Quantile Transform model. If the path is not existent, the Normal Quantile Transform model will be computed '
+             'based on the training data and saved under such a path. The Normal Quantile Transform model is used during the pre-processing of the data to ensure '
+             'the data exists within the same range.'
+    )
+
 
 
     args_config, remaining_args = config_parser.parse_known_args()

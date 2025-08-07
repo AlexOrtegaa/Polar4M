@@ -2,7 +2,6 @@ import numpy as np
 
 import torch
 
-
 class IQRScaler:
     def __init__(
             self,

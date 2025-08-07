@@ -25,6 +25,7 @@ def main():
 
     os.makedirs(f'{CHECKPOINTS_DIR}/{args.name_model}', exist_ok=True)
     os.makedirs(f'{METRICS_DIR}/{args.name_model}', exist_ok=True)
+    os.makedirs(os.path.dirname(args.qt_path), exist_ok=True)
 
     train_dataloader, val_dataloader, test_dataloader = _load_data(
         datafile_path = args.datafile_path,
@@ -32,18 +33,21 @@ def main():
         num_workers = args.num_workers,
         prefetch_factor = args.prefetch_factor,
         pin_memory = args.pin_memory,
+        args=args,
     )
 
     model = VQVAE(
         in_channels=1,
         hidden_channels=16,
         residual_channels=8,
-        num_residual_layers=20,
-        codebook_size=100,
+        num_residual_layers=60,
+        codebook_size=30,
         codebook_dim=3,
         commitment_weight=1,
         orthogonal_reg_weight=0.2,
     )
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total params: {total_params}")
 
     model.to(device)
 

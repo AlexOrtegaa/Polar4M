@@ -23,3 +23,6 @@ T_0: 100
 T_mult: 1
 eta_min: 1e-6
 last_epoch: -1
+
+# Quantile Transform model
+qt_path: "./transforms/qt_stokes_i.pkl"
