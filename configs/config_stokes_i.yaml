@@ -1,11 +1,11 @@
 #Model training
 datafile_path: "./src/data/datasets/clean_stokes_i.npy"
-num_epochs: 21000
-name_model: "vq_stokes_i"
+num_epochs: 30000
+name_model: "round1_extended_vq_stokes_i"
 
 #Pretrained model
-load_pretrained_model: null
-load_epoch: null
+load_pretrained_model: "vq_stokes_i"
+load_epoch: 21000
 load_shift: 0
 
 #Data processing

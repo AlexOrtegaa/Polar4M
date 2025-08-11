@@ -61,7 +61,7 @@ def main():
     scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer,
         max_lr=1e-5,
-        total_steps=42000,
+        total_steps=168000,
         div_factor=1e1,
         final_div_factor=1e4,
     )
@@ -73,6 +73,14 @@ def main():
         args,
         CHECKPOINTS_DIR,
         device,
+    )
+
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(
+        optimizer,
+        max_lr=1e-5,
+        total_steps=168000,
+        div_factor=1e1,
+        final_div_factor=1e4,
     )
 
 
