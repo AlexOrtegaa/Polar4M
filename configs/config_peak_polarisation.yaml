@@ -1,7 +1,7 @@
 
 #Model training
 datafile_path: "./src/data/datasets/clean_peak_polarisation_intensity.npy"
-num_epochs: 7000
+num_epochs: 21000
 name_model: "vq_peak_polarisation"
 
 #Pretrained model
@@ -10,7 +10,7 @@ load_epoch: null
 load_shift: 0
 
 #Data processing
-batch_size: 512
+batch_size: 2048
 num_workers: 3
 prefetch_factor: 16
 pin_memory: True

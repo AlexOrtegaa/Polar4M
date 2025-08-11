@@ -1,7 +1,8 @@
+
 #Model training
-datafile_path: "./src/data/datasets/clean_stokes_i.npy"
-num_epochs: 7000
-name_model: "vq_stokes_i"
+datafile_path: "./src/data/datasets/rotation_measure.npy"
+num_epochs: 21000
+name_model: "vq_rotation_measure"
 
 #Pretrained model
 load_pretrained_model: null
@@ -9,7 +10,7 @@ load_epoch: null
 load_shift: 0
 
 #Data processing
-batch_size: 512
+batch_size: 2048
 num_workers: 3
 prefetch_factor: 16
 pin_memory: True
@@ -25,4 +26,4 @@ eta_min: 1e-6
 last_epoch: -1
 
 # Quantile Transform model
-qt_path: "./transforms/qt_stokes_i.pkl"
+qt_path: "./transforms/qt_rotation_measure.pkl"

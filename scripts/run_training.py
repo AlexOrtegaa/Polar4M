@@ -74,6 +74,7 @@ def main():
         device,
     )
 
+
     train(
         model=model,
         optimizer=optimizer,
