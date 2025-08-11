@@ -45,6 +45,7 @@ def main():
         codebook_dim=3,
         commitment_weight=1,
         orthogonal_reg_weight=0.2,
+        sample_codebook_temp=1
     )
     total_params = sum(p.numel() for p in model.parameters())
     print(f"Total number of params: {total_params}")
@@ -59,7 +60,7 @@ def main():
 
     scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer,
-        max_lr=1e-3,
+        max_lr=1e-5,
         total_steps=42000,
         div_factor=1e1,
         final_div_factor=1e4,

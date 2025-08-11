@@ -19,6 +19,8 @@ class VQVAE(nn.Module):
             codebook_dim,
             commitment_weight,
             orthogonal_reg_weight,
+            sample_codebook_temp,
+
     ):
         super().__init__()
 
@@ -45,7 +47,7 @@ class VQVAE(nn.Module):
             orthogonal_reg_weight=orthogonal_reg_weight,
             orthogonal_reg_active_codes_only=False,
             orthogonal_reg_max_codes=None,
-            sample_codebook_temp=0.,
+            sample_codebook_temp=sample_codebook_temp,
             norm_latents=True,
         )
 
