@@ -1,28 +1,55 @@
-#Model training
-datafile_path: "./src/data/datasets/clean_stokes_i.npy"
-num_epochs: 30000
-name_model: "round1_extended_vq_stokes_i"
 
-#Pretrained model
-load_pretrained_model: "vq_stokes_i"
-load_epoch: 21000
-load_shift: 0
+training:
+  num_epochs: 30000
+  name_model: "round1_extended_vq_stokes_i"
+  accelerator: "gpu"
+  devices: 1
+  precision: 32
+  deterministic: False
 
-#Data processing
-batch_size: 2048
-num_workers: 3
-prefetch_factor: 16
-pin_memory: True
 
-#Optimizer
-lr: 1e-3
-weight_decay: 1e-4
+hparams:
+  # Optimizer configuration
+  optimizer_name: "adamw"
+  lr: 0.001
+  weight_decay: 0.0001
 
-#Scheduler
-T_0: 100
-T_mult: 1
-eta_min: 1e-6
-last_epoch: -1
+  # Scheduler configuration
+  scheduler_name: "cos_annealing_warm_restarts"
+  T_0: 100
+  T_mult: 1
+  eta_min: 1e-6
+  last_epoch: -1
 
-# Quantile Transform model
-qt_path: "./transforms/qt_stokes_i.pkl"
+
+data:
+  datafile_path: "./src/data/datasets/clean_stokes_i.npy"
+  batch_size: 2048
+  num_workers: 3
+  prefetch_factor: 16
+  pin_memory: True
+  qt_path: "./transforms/qt_stokes_i.pkl"
+
+
+architecture_config:
+  # Model architecture parameters
+  in_channels: 1
+  hidden_channels: 16
+  residual_channels: 8
+  num_residual_layers: 60
+  codebook_size: 30
+  codebook_dim: 3
+  commitment_weight: 1
+  orthogonal_reg_weight: 0.2
+  sample_codebook_temp: 1
+
+
+checkpoints:
+  every_n_epochs: 50
+  save_top_k: -1
+
+
+
+
+
+

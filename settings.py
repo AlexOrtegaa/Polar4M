@@ -5,7 +5,6 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 #Data saving directories
 CONFIGS_DIR = os.path.join(ROOT_DIR, 'configs')
 CHECKPOINTS_DIR = os.path.join(ROOT_DIR, 'checkpoints')
-METRICS_DIR = os.path.join(ROOT_DIR, 'metrics')
 
 #Data directories
 IDENTIFIERS_DIR = os.path.join(ROOT_DIR, 'src', 'data', 'identifiers')
