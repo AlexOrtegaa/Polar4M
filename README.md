@@ -2,7 +2,7 @@
 
 *A foundational model for POSSUM polarisation data based on the 4M framework.*
 
-![Model Architecture](docs/architecture.png)
+![Model Architecture](docs/model_architecture.png)
 
 ## Table of contents
 * [Before you begin...](#before-you-begin)
