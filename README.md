@@ -210,6 +210,9 @@ If you want to keep on working in ML, you might find useful the following sites:
 * [Google's Deepmind blog](https://deepmindsafetyresearch.medium.com/)
 * [Andrej Karpathy's 101 blogpost on training NN](https://karpathy.github.io/2019/04/25/recipe/)
 
+
+
+
 ## Acknowledgments
 
 So far, the code here is an application of the [4M framework](https://github.com/apple/ml-4m/blob/main/README.md) for the polarisation data
