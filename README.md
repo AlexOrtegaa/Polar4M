@@ -1,8 +1,9 @@
 # Polar4M
 
 *A foundational model for POSSUM polarisation data based on the 4M framework.*
+
 ![Model Architecture](docs/architecture.png)
----
+
 ## Table of contents
 * [Before you begin...](#before-you-begin)
 * [Motivation / Problem](#motivation--problem)
@@ -15,7 +16,7 @@
   * [Extra resources](#extra-resources)
 * [Acknowledgments](#acknowledgments)
 
----
+
 ## Before you begin
 This repo represents my work through the summer with 
 Erik Osinga, Bryan Gaensler, Mike Walmsey and Joshua Speagle 
@@ -48,7 +49,7 @@ of the project. Later, you might find useful to come back and read the set of
 papers above. The order in which I recommend reading the papers goes from top to
 bottom, but feel free to follow any order.
 
----
+
 ## Motivation / Problem
 
 Polarisation observations allows us to understand the magnetized universe:
@@ -71,7 +72,7 @@ develop an ML framework that can **understand** this sea of data. Therefore,
 picking up outliers and meaningful patterns in the data through which
 **new physics** can be derived.
 
----
+
 
 ## Methodology
 
@@ -113,7 +114,7 @@ The compression goes beyond the dimension of each vector in $S$. Suddenly you ca
 whole structure of the image by $H \times W$ numbers.
 
 ![Working scheme](docs/working_scheme.png)
----
+
 
 ## Data
 
@@ -145,7 +146,7 @@ quite well given  the number of relative samples does not significantly change.
 Finally, with `torchvision` we have resized each 2D cut around the source 
 to a 64x64 feature map for each data modality.
 
----
+
 
 ## Code structure
 
@@ -166,14 +167,13 @@ Code and utilities for the model.
 - `settings.py` - Unified file path configuration (e.g. `CHECKPOINTS_DIR`).
 - `example_train.sh` - Example file to run a SLURM job.
 
----
 
 ## Installation / Setup
 **Dependencies:**  
 ```bash
 pip install -r requirements.txt
 ```
----
+
 
 ## Warnings
 
@@ -181,7 +181,7 @@ The model is under construction. We have finished the first part consisting
 on data tokenization with VQ-Quantizers. The code for the transformer part
 will soon be released as 75% of it is done.
 
----
+
 
 ## Further comments
 
@@ -224,7 +224,7 @@ Please refer to the papers for further information. In the future, we seek to
 go beyond an application by creating a better quantizer through the ideas highlighted above.
 Therefore, extending the model.
 
----
+
 
 *Thank you once more to Erik Osinga, Bryan Gaensler, 
 Mike Walmsey and Joshua Speagle for an incredible summer.*
