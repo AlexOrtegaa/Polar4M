@@ -6,6 +6,7 @@ from settings import (CONFIGS_DIR, IDENTIFIERS_DIR,
                       TRAIN_IDS_PATH, VAL_IDS_PATH, TEST_IDS_PATH)
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import QuantileTransformer
+from collections.abc import MutableMapping
 
 import numpy as np
 
@@ -18,7 +19,7 @@ import joblib
 
 
 
-arguments_groups_dict = {
+arguments_group_dict = {
     'training': [
         'num_epochs',
         'name_model',
@@ -26,16 +27,15 @@ arguments_groups_dict = {
         'devices',
         'precision',
         'deterministic',
+        'seed',
     ],
-    'optimizer': [
+    'hparams': [
         'optimizer_name',
         'lr',
         'weight_decay',
         'betas',
         'eps',
         'momentum',
-    ],
-    'scheduler': [
         'scheduler_name',
         'T_0',
         'T_mult',
@@ -50,7 +50,7 @@ arguments_groups_dict = {
         'pin_memory',
         'qt_path',
     ],
-    'architecture': [
+    'architecture_config': [
         'in_channels',
         'hidden_channels',
         'residual_channels',
@@ -88,16 +88,36 @@ def create_identifiers():
 
     return
 
-def apply_standard_scaler(
-        data
+def fit_standar_scaler(
+        data,
+):
+    scaler = StandardScaler()
+    scaler.fit(data.reshape(-1, 1))
+    return scaler
+
+def apply_standardization(
+        data,
+        scaler
 ):
     shape = data.shape
 
-    scaler = StandardScaler()
     data = data.reshape(-1, 1)
-    scaler.fit(data)
+    data = scaler.transform(data)
 
-    return scaler.transform(data).reshape(shape)
+    return data.reshape(shape)
+
+def standard_scaler_splits(
+        train,
+        val,
+        test,
+):
+    scaler = fit_standar_scaler(train)
+
+    train = apply_standardization(train, scaler)
+    val = apply_standardization(val, scaler)
+    test = apply_standardization(test, scaler)
+
+    return train, val, test
 
 def load_or_fit_quantile_transformer(
         data,
@@ -155,14 +175,19 @@ def _load_data(
         prefetch_factor,
         pin_memory,
         qt_path,
+        seed,
 ):
     data = np.load(datafile_path)
-
-    data = apply_standard_scaler(data)
 
     train_ids = np.load(TRAIN_IDS_PATH)
     val_ids = np.load(VAL_IDS_PATH)
     test_ids = np.load(TEST_IDS_PATH)
+
+    data[train_ids], data[val_ids], data[test_ids] = standard_scaler_splits(
+        data[train_ids],
+        data[val_ids],
+        data[test_ids],
+    )
 
     data[train_ids], data[val_ids], data[test_ids] = quantile_transform_splits(
         data[train_ids],
@@ -175,13 +200,18 @@ def _load_data(
     val_dataset = ModalityDataset(data, val_ids)
     test_dataset = ModalityDataset(data, test_ids)
 
+    g = torch.Generator()
+    g.manual_seed(seed)
+
     train_dataloader = DataLoader(
         dataset=train_dataset,
+        generator=g,
         batch_size=batch_size,
         num_workers=num_workers,
         prefetch_factor=prefetch_factor,
         pin_memory=pin_memory,
         shuffle=True,
+        persistent_workers= num_workers > 0,
     )
     val_dataloader = DataLoader(
         dataset=val_dataset,
@@ -189,7 +219,8 @@ def _load_data(
         num_workers=num_workers,
         prefetch_factor=prefetch_factor,
         pin_memory=pin_memory,
-        shuffle=False
+        shuffle=False,
+        persistent_workers = num_workers > 0,
     )
     test_dataloader = DataLoader(
         dataset=test_dataset,
@@ -197,7 +228,8 @@ def _load_data(
         num_workers=num_workers,
         prefetch_factor=prefetch_factor,
         pin_memory=pin_memory,
-        shuffle=False
+        shuffle=False,
+        persistent_workers= num_workers > 0,
     )
 
     return train_dataloader, val_dataloader, test_dataloader
@@ -261,6 +293,12 @@ def _get_args():
         default=False,
         help='If set to True, it will use deterministic training. '
              'It will ensure that the training is reproducible, but it might be slower.',
+    )
+    parser.add_argument(
+        '--seed',
+        type=int,
+        default=0,
+        help='Random seed for training. '
     )
 
     # -- Hyperparameters arguments--
@@ -474,16 +512,37 @@ def _get_args():
     args_config, remaining_args = config_parser.parse_known_args()
 
     if args_config.config:
-        with open(f'{CONFIGS_DIR}/{args_config.config}.yaml', 'r') as f:
-            config = yaml.safe_load(f)
-            parser.set_defaults(**config)
+        with open(f'{CONFIGS_DIR}/{args_config.config}', 'r') as f:
+            config_yaml = yaml.safe_load(f)
+            flat_config_yaml = flatten(config_yaml)
+            parser.set_defaults(**flat_config_yaml)
+
 
     args = parser.parse_args(remaining_args)
 
-    config['training']['config_path'] = args_config.config
+    return args
+
+def flatten(dictionary):
+    items = []
+    for key, value in dictionary.items():
+
+        if isinstance(value, MutableMapping):
+            items.extend(flatten(value).items())
+        else:
+            items.append((key, value))
+    return dict(items)
+
+def build_config(
+        args
+):
+    config = {}
+    for grp, list_args in arguments_group_dict.items():
+
+        config[grp] = {}
+        for arg in list_args:
+            config[grp][arg] = getattr(args, arg)
 
     return config
-
 
 def load_pretrained(
         model,

@@ -2,10 +2,11 @@
 training:
   num_epochs: 30000
   name_model: "round1_extended_vq_stokes_i"
-  accelerator: "gpu"
+  accelerator: "cpu"
   devices: 1
   precision: 32
   deterministic: False
+  seed: 42
 
 
 hparams:

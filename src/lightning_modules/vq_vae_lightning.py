@@ -76,12 +76,12 @@ class LightningVQVAE(L.LightningModule):
         optimizer = self.optimizers()
 
         self.log('train_loss', outputs['loss'], on_step=False, on_epoch=True, prog_bar=True)
-        self.log("train_recon_loss", outputs['recon_loss'], on_step=False, on_epoch=True, prog_bar=True)
-        self.log("train_vq_loss", outputs['vq_loss'], on_step=False, on_epoch=True, prog_bar=True)
-        self.log("train_commit_loss", outputs['commit_loss'], on_step=False, on_epoch=True, prog_bar=True)
-        self.log("train_orthogonal_reg_loss", outputs['orthogonal_reg_loss'], on_step=False, on_epoch=True, prog_bar=True)
-        self.log("train_perplexity", outputs['perplexity'], on_step=False, on_epoch=True, prog_bar=True)
-        self.log("lr", optimizer.param_groups[0]["lr"], on_step=False, on_epoch=True, prog_bar=True)
+        self.log("train_recon_loss", outputs['recon_loss'], on_step=False, on_epoch=True)
+        self.log("train_vq_loss", outputs['vq_loss'], on_step=False, on_epoch=True)
+        self.log("train_commit_loss", outputs['commit_loss'], on_step=False, on_epoch=True)
+        self.log("train_orthogonal_reg_loss", outputs['orthogonal_reg_loss'], on_step=False, on_epoch=True)
+        self.log("train_perplexity", outputs['perplexity'], on_step=False, on_epoch=True)
+        self.log("lr", optimizer.param_groups[0]["lr"], on_step=False, on_epoch=True)
 
         return outputs['loss']
 

@@ -77,6 +77,7 @@ class ResidualLayer(
             A tensor containing the output of the residual layer after applying the residual block
             and adding the input to it.
         """
+
         x = x + self.res_block(x)
         return x
 

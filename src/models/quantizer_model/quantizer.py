@@ -403,7 +403,7 @@ class EuclideanCodebook(
                 - embed_ind is the indices of the selected embeddings from the codebook. It has the same shape as the input tensor.
                 - perplexity is a measure of how many unique codes are used in the quantization process.
         """
-        x = x.float()
+        x = x.float() # if x is a f_map it will look like (b, (hxw), c)
 
         shape, dtype = x.shape, x.dtype
 
@@ -421,7 +421,8 @@ class EuclideanCodebook(
 
         embed_ind = gumbel_sample(dist, dim = -1, temperature = self.sample_codebook_temp)
         embed_onehot = F.one_hot(embed_ind, self.codebook_size).type(dtype)
-        embed_ind = embed_ind.view(*shape[:-1])
+
+        embed_ind = embed_ind.reshape(*shape[:-1])
         quantize = F.embedding(embed_ind, self.embed)
 
         if self.training:
